@@ -1,5 +1,5 @@
 {
-  "homepage": "http://NandkumarMohite.github.io/Smart-Home-POC-Web-App",
+  "homepage": "http://NandkumarMohite.github.io/poc-web-app-for-smart-home",
   "name": "useriotthingwebapp",
   "version": "0.1.0",
   "private": true,
@@ -21,7 +21,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -b main -d build",
+    "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
