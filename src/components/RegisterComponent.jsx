@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { toast} from 'react-toastify';
+import ConfirmAccountComponent from "./ConfirmAccountComponent";
 
 function RegistrationComponent() {
 
@@ -9,26 +12,37 @@ function RegistrationComponent() {
     const [gender, setGender] = useState('');
     const [given_name, setGiven_name] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         // Handle form submission (e.g., send data to backend)
         try {
-            const response = await axios.post("https://ucng2iletd.execute-api.us-east-1.amazonaws.com/dev/register", { username, email, address, gender, given_name, password });
+            const response = await axios.post("https://gwhx3x3g47.execute-api.us-east-1.amazonaws.com/dev/register", 
+            { username, email, address, gender, given_name, password });
 
+            if(response.data.status=200){
 
-            // if (response.ok) {
-            //   // Registration successful, handle the response as needed
-            //   console.log("User registered successfully!");
-            // } else {
-            //   // Registration failed, handle the error response
-            //   console.error("Error registering user:", response.statusText);
-            // }
+                toast.success("Registration successfull please login");
+                localStorage.setItem('username',username);
+                localStorage.setItem('password',password);
+                // <ConfirmAccountComponent username={username} password={password}  />
+            }
+
+            setTimeout(() => {
+                navigate("/confirmAccount");
+              }, 5000);
+            
         } catch (error) {
-            console.error("An error occurred:", error.message);
+            if(error.message.includes("500")){
+                toast.error("User Name Alreday exsist please sign in");
+            }
+           
         }
-
     };
+    const handleClickLogin = () =>{
+        navigate("/")
+    }
 
     return (
         <div className="container">
@@ -99,6 +113,7 @@ function RegistrationComponent() {
                 </div>
                 <button type="submit">Register</button>
             </form>
+            <button onClick={handleClickLogin} style={{marginTop:"20px"}}>Go To Login</button>
         </div>
         </div>
     );

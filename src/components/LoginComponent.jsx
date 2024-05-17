@@ -13,13 +13,15 @@ function LoginComponent() {
 
         try {
             // Make an API request to localhost:8000/SIGNIN
-            const response = await axios.post("https://ucng2iletd.execute-api.us-east-1.amazonaws.com/dev/signIn", {
+            const response = await axios.post("https://gwhx3x3g47.execute-api.us-east-1.amazonaws.com/dev/signIn",
+             {
                 username,
                 password,
             });
             toast("sign in successful!");
-            console.log(response.data.data.userId)
-            localStorage.setItem("userId", response.data.data.userId)
+            console.log(response.data.data);
+            localStorage.setItem("AccessToken", response.data.data.AuthenticationResult.AccessToken);
+            localStorage.setItem("IdToken", response.data.data.AuthenticationResult.IdToken);
             // Handle the response (e.g., redirect to dashboard, show success message)
             console.log("API response:", response.data);
             navigate("/home");
